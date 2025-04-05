@@ -1,4 +1,11 @@
 
 <country-search-input placeHolder="Buscar por capital" (value)="onSearch($event)"/>
 
-<country-table-list [countries]="countris()"/>
+
+@if (isError())
+{
+  <h3>{{isError()}}</h3>
+}
+@else{
+  <country-table-list [countries]="countris()"/>
+}

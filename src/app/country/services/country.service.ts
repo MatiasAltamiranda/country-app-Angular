@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { RESTCountry } from '../interfaces/rest-countries.interfaces';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { CountryMapper } from '../mappers/country.mapper';
 import type { Country } from '../interfaces/country.interface';
 
@@ -24,7 +24,11 @@ export class CountryService {
 
       return this.http.get<RESTCountry[]>(`${apiUrl}/capital/${query}`)
       .pipe(
-        map(resp=> CountryMapper.mapRESTCountryItemToCountryArray(resp) )
+        map(resp=> CountryMapper.mapRESTCountryItemToCountryArray(resp) ),
+        catchError((error)=>{
+            console.log("Error consulta", error)
+            return throwError(()=> new Error(`No se encontre un país con la capital ingresada: ${query}`))
+        })
       )
 
   }

@@ -25,10 +25,19 @@ export class ByCapitalPageComponent {
       this.isLoading.set(true);
       this.isError.set(null);
 
-        this.countryService.searchByCapital(value).subscribe((data)=>{
-          this.isLoading.set(false);
-          this.countris.set(data);
-        } )
+        this.countryService.searchByCapital(value).subscribe(
+          {
+            next:(data) => {
+                this.isLoading.set(false);
+                this.countris.set(data);
+            },
+            error:(err)=> {
+                this.isLoading.set(false);
+                this.countris.set([]);
+                this.isError.set(err)
+            },
+          }
+        )
     }
 
 }
