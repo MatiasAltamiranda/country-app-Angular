@@ -27,11 +27,23 @@ export class CountryService {
         map(resp=> CountryMapper.mapRESTCountryItemToCountryArray(resp) ),
         catchError((error)=>{
             console.log("Error consulta", error)
-            return throwError(()=> new Error(`No se encontre un país con la capital ingresada: ${query}`))
+            return throwError(()=> new Error(`No se encontro un país con la capital ingresada: ${query}`))
         })
       )
 
   }
 
+  searchByCountry(query:string): Observable<Country[]>{
+    query = query.toLocaleLowerCase();
+
+    return this.http.get<RESTCountry[]>(`${apiUrl}/name/${query}`)
+    .pipe(
+      map(resp=> CountryMapper.mapRESTCountryItemToCountryArray(resp) ),
+      catchError((error)=>{
+          console.log("Error consulta", error)
+          return throwError(()=> new Error(`No se encontro un país con el nombre: ${query}`))
+      })
+    )
+  }
 
 }
