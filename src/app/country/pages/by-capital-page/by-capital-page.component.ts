@@ -2,7 +2,8 @@ import {Component, inject, resource, signal } from '@angular/core';
 import { CountrySearchInputComponent } from "../../components/country-search-input/country-search-input.component";
 import { CountryTableListComponent } from "../../components/country-table-list/country-table-list.component";
 import { CountryService } from '../../services/country.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'by-capital-page',
@@ -40,9 +41,9 @@ export class ByCapitalPageComponent {
         )
     } */
 
-    query = signal('');
 
-    countryResource= resource({
+
+  /*   countryResource= resource({
       request: ()=>({query : this.query()}),
       loader : async({request})=>{
         if (!request.query) return [];
@@ -50,7 +51,19 @@ export class ByCapitalPageComponent {
           this.countryService.searchByCapital(request.query)
         )
       }
+    }) */
+
+    query = signal('');
+
+    countryResource=  rxResource({
+      request: ()=>({query : this.query()}),
+      loader : ({request})=>{
+       if (!request.query) return of([]);
+        return this.countryService.searchByCapital(request.query)
+
+      }
     })
+
 
 
 
