@@ -39,7 +39,6 @@ export class CountryService {
     return this.http.get<RESTCountry[]>(`${apiUrl}/name/${query}`)
     .pipe(
       map(resp=> CountryMapper.mapRESTCountryItemToCountryArray(resp) ),
-      delay(3000),
       catchError((error)=>{
           console.log("Error consulta", error)
           return throwError(()=> new Error(`No se encontro un país con el nombre: ${query}`))
