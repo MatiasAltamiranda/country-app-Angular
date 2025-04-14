@@ -1,0 +1,31 @@
+<section class="flex flex-col items-center justify-center my-5">
+  <section class="mx-10 mb-5">
+  <h1 class="text-7xl">{{country().name}}</h1>
+</section>
+
+
+<section class="stats shadow mx-5 my-5 bg-indigo-900">
+  <div class="stat place-items-center">
+    <div class="stat-title text-zinc-300">Población</div>
+    <div class="stat-value"> {{country().population | number}}</div>
+  </div>
+
+  <div class="stat place-items-center">
+    <div class="stat-title text-zinc-300">Nombre</div>
+    <div class="stat-value text-primary">{{country().name}}</div>
+  </div>
+
+  <div class="stat place-items-center">
+    <div class="stat-title text-zinc-300">Codigo País</div>
+    <div class="stat-value">{{country().cca2}}</div>
+  </div>
+</section>
+
+<section class="mt-5">
+
+<img
+  [src]="country().flagSVG"
+  class=" rounded-lg shadow-2xl" />
+</section>
+
+</section>
